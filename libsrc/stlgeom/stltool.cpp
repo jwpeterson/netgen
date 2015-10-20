@@ -615,7 +615,7 @@ STLChart :: STLChart(STLGeometry * ageometry)
 
   geometry = ageometry;
 
-  if ( (stlparam.usesearchtree == 1))
+  if (stlparam.usesearchtree == 1)
     searchtree = new Box3dTree (geometry->GetBoundingBox().PMin() - Vec3d(1,1,1),
 				geometry->GetBoundingBox().PMax() + Vec3d(1,1,1));
   else
