@@ -18,8 +18,6 @@ namespace netgen
 
      Array<INDEX_2> connectednodes;
 
-     if (&mesh3d.LocalHFunction() == NULL) mesh3d.CalcLocalH(mp.grading);
-
      mesh3d.Compress();
 
      //  mesh3d.PrintMemInfo (cout);
