@@ -262,8 +262,6 @@ namespace netgen
     INDEX_2_HASHTABLE<int> & identpts = 
       mesh.GetIdentifications().GetIdentifiedPoints ();
 
-    if (&identpts)
-      {
 	for (i = 1; i <= identpts.GetNBags(); i++)
 	  for (j = 1; j <= identpts.GetBagSize(i); j++)
 	    {
@@ -297,7 +295,6 @@ namespace netgen
 		    }
 		}
 	    }
-      }
 
   
   
