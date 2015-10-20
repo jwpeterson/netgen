@@ -538,6 +538,11 @@ namespace netgen
           shape(3) = (1-p(0))*   p(1) ;
           break;
         }
+      default:
+        {
+          // Avoid warnings about unhandled enumeration values 'SEGMENT', 'SEGMENT3', 'TRIG6', ...
+          break;
+        }
       }
   }
 
@@ -615,6 +620,11 @@ namespace netgen
 
           dshape(3,0) = -p(1);
           dshape(3,1) = (1-p(0));
+          break;
+        }
+      default:
+        {
+          // Avoid warnings about unhandled enumeration values 'SEGMENT', 'SEGMENT3', 'TRIG6', ...
           break;
         }
       }
@@ -1698,6 +1708,8 @@ namespace netgen
       {
       case TET: pp = &eltetqp[0][0]; break;
       case TET10: pp = &eltet10qp[ip-1][0]; break;
+        // Avoid warnings about unhandled enumeration values 'SEGMENT', 'SEGMENT3', 'TRIG6', ...
+      default: break;
       }
 
     p(0) = pp[0];
@@ -1823,6 +1835,11 @@ namespace netgen
           shape(7) = (1-hp(0))*(  hp(1))*(  hp(2));
           break;
         }
+      default:
+        {
+          // Avoid warnings about unhandled enumeration values 'SEGMENT', 'SEGMENT3', 'TRIG6', ...
+          break;
+        }
       }
   }
 
@@ -1907,6 +1924,11 @@ namespace netgen
           shape(5) = (  p(0))*(1-p(1))*(  p(2));
           shape(6) = (  p(0))*(  p(1))*(  p(2));
           shape(7) = (1-p(0))*(  p(1))*(  p(2));
+          break;
+        }
+      default:
+        {
+          // Avoid warnings about unhandled enumeration values 'SEGMENT', 'SEGMENT3', 'TRIG6', ...
           break;
         }
       }
