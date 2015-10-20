@@ -21,7 +21,11 @@ endif(WIN32)
 
 add_library(nglib SHARED nglib.cpp ${nglib_objects})
 if(NOT WIN32)
-      target_link_libraries( nglib mesh stlvis stl geom2dvis interface geom2d csg stl visual csgvis )
+      target_link_libraries( nglib mesh stl interface geom2d csg stl visual )
+  # Only link against these if we're building with GUI support.
+  if(USE_GUI)
+        target_link_libraries( stlvis geom2dvis csgvis )
+  endif(USE_GUI)
 endif(NOT WIN32)
 
 target_link_libraries( nglib ${LIBPTHREAD} ${OCC_LIBRARIES} ${LIBTOGL} ${MPI_CXX_LIBRARIES} ${OPENGL_LIBRARIES} ${TK_LIBRARY} ${TCL_LIBRARY} ${CMAKE_THREAD_LIBS_INIT} ${X11_Xmu_LIB} ${JPEG_LIBRARIES} ${MKL_LIBRARIES} ${ZLIB_LIBRARIES} )
