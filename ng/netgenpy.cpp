@@ -1,10 +1,7 @@
 // a wrapper to load netgen-dll into python
 
 #include <iostream>
-
-#ifdef NG_PYTHON
 #include <boost/python.hpp>
-#endif
 
 #ifdef WIN32
 #define DLL_HEADER __declspec(dllimport)
@@ -19,7 +16,6 @@ void DLL_HEADER ExportCSG();
 void DLL_HEADER ExportCSGVis();
 void DLL_HEADER ExportGeom2d();
 
-#ifdef NG_PYTHON
 BOOST_PYTHON_MODULE(libngpy) 
 {
     ExportCSG();
@@ -28,4 +24,4 @@ BOOST_PYTHON_MODULE(libngpy)
     ExportMeshVis();
     ExportGeom2d();
 }
-#endif
+
