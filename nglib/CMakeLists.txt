@@ -47,3 +47,6 @@ endif(USE_PYTHON)
 # endif(NOT WIN32)
 
 install(TARGETS nglib ${ng_install_dir})
+
+# Install the nglib.h header file
+install(FILES nglib.h DESTINATION "include")
