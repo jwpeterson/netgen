@@ -1044,7 +1044,7 @@ int STLBoundary :: TestSeg(const Point<3>& p1, const Point<3> & p2, const Vec<3>
 	}
       
 
-      if (possible && 0)
+      if (possible && false)
 
 	for (i = 0; i <= divisions; i++)
 	  {

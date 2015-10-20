@@ -754,7 +754,7 @@ namespace netgen
 		  << "points: " << mesh->GetNP() << endl;
 #endif      
       
-	if (mparam.uselocalh && 0)
+	if (mparam.uselocalh && false)
 	  {
 	    mesh->CalcLocalH(mparam.grading);      
 	    mesh->DeleteMesh();
