@@ -510,7 +510,9 @@ namespace nglib
       //  MeshingParameters mparam;  
       mp->Transfer_Parameters();
 
-      shared_ptr<Mesh> m;
+      // MeshFromSpline2D expects a constructed Mesh, the first thing
+      // it tries to do is SetDimension() on it!
+      shared_ptr<Mesh> m(new Mesh);
       MeshFromSpline2D (*(SplineGeometry2d*)geom, m, mparam);
       new shared_ptr<Mesh> (m);  // hack to keep mesh m alive 
 
