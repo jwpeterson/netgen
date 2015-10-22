@@ -982,11 +982,16 @@ namespace nglib
      //     cerr << "Error: .geo should start with 'algebraic3d'" << endl;
      //     return NULL;
      //   }
-
      // Not sure exactly what this does, but it was in csgeom.cpp
      // hgeom -> FindIdenticSurfaces(1e-8 * hgeom->MaxSize());
      // return hgeom;
 
+     // Another try: we've added a LoadGeo function to the CSGeometry class.
+     CSGeometry geom;
+     ifstream ist(filename);
+     cout << "Preparing to call CSGeometry::Load()" << endl;
+     CSGeometry * geom_ptr = geom.LoadGeo(ist);
+     
      // Return value
      Ng_CSG_Geometry * ret_geo = NULL; // To be implemented:Ng_CSG_NewGeometry();
      return ret_geo;
