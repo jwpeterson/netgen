@@ -961,6 +961,19 @@ namespace nglib
 #endif
 
 
+   // ------------------ Begin - CSG / Meshing Utility Functions ----------------
+   DLL_HEADER Ng_CSG_Geometry * Ng_CSG_LoadGeometry (const char * filename)
+   {
+      CSGeometry geom;
+      ifstream ist(filename);
+      cout << "Preparing to call CSGeometry::Load()" << endl;
+      geom.Load(ist);
+
+      // Return value
+      Ng_CSG_Geometry * ret_geo = NULL; // To be implemented:Ng_CSG_NewGeometry();
+      return ret_geo;
+   }
+   // ------------------ End - CSG / Meshing Utility Functions ----------------
 
 
    // ------------------ Begin - Meshing Parameters related functions ------------------

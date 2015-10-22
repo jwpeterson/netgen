@@ -691,6 +691,12 @@ DLL_HEADER Ng_Result Ng_OCC_GetFMap(Ng_OCC_Geometry * geom,
 
 #endif // OCCGEOMETRY
 
+// **********************************************************
+// **   CSG Meshing                                        **
+// **********************************************************
+
+// Load geometry from CSG file.
+DLL_HEADER Ng_CSG_Geometry * Ng_CSG_LoadGeometry (const char * filename);
 
 
 // **********************************************************
