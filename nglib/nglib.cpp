@@ -960,6 +960,9 @@ namespace nglib
    // ------------------ End - OCC Geometry / Meshing Utility Functions ----------------
 #endif
 
+  // This is a free function defined in csgparser.cpp.  For some
+  // reason, this is done like this in many parts of the library...
+  // extern CSGeometry * ParseCSG (istream & istr);
 
    // ------------------ Begin - CSG / Meshing Utility Functions ----------------
    DLL_HEADER Ng_CSG_Geometry * Ng_CSG_LoadGeometry (const char * filename)
@@ -970,7 +973,8 @@ namespace nglib
      // cout << "Preparing to call CSGeometry::Load()" << endl;
      // geom.Load(ist);
 
-     // // From csgeom.cpp - what is ParseCSG?
+     // From csgeom.cpp - ParseCSG is a local function declared in csgparser.cpp.
+     // This code will compile, but you will get an undefined symbol at runtime.
      // ifstream ist(filename);
      // CSGeometry * hgeom = ParseCSG(ist);
      // if (!hgeom)
