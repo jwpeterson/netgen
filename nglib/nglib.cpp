@@ -968,7 +968,12 @@ namespace nglib
      ifstream ist(filename);
      cout << "Preparing to call CSGeometry::Load()" << endl;
      CSGeometry * geom_ptr = geom.LoadGeo(ist);
-     
+
+     // Investigation: print the number of surfaces in the geometry.
+     cout << "CSG has " << geom_ptr->GetNSolids()
+          << " solids, and " << geom_ptr->GetNSurf()
+          << " surfaces." << endl;
+
      // Return value
      Ng_CSG_Geometry * ret_geo = NULL; // To be implemented:Ng_CSG_NewGeometry();
      return ret_geo;
