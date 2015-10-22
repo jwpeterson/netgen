@@ -163,7 +163,7 @@ namespace netgen
 		const GeomPoint<D> & ap2, 
 		const GeomPoint<D> & ap3);
     ///
-    inline virtual Point<D> GetPoint (double t) const;
+    virtual Point<D> GetPoint (double t) const;
     ///
     virtual Vec<D> GetTangent (const double t) const;
 
