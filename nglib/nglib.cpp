@@ -962,6 +962,11 @@ namespace nglib
 #endif
 
    // ------------------ Begin - CSG / Meshing Utility Functions ----------------
+   DLL_HEADER Ng_CSG_Geometry * Ng_CSG_NewGeometry ()
+   {
+      return (Ng_CSG_Geometry*)(void*)new CSGeometry;
+   }
+
    DLL_HEADER Ng_CSG_Geometry * Ng_CSG_LoadGeometry (const char * filename)
    {
      CSGeometry geom;
@@ -987,7 +992,7 @@ namespace nglib
           << " elements." << endl;
 
      // Return value
-     Ng_CSG_Geometry * ret_geo = NULL; // To be implemented:Ng_CSG_NewGeometry();
+     Ng_CSG_Geometry * ret_geo = Ng_CSG_NewGeometry();
      return ret_geo;
    }
    // ------------------ End - CSG / Meshing Utility Functions ----------------
