@@ -153,6 +153,7 @@ namespace netgen
     virtual void Save (string filename) const;
     void Save (ostream & ost) const;
     void Load (istream & ist);
+    CSGeometry * LoadGeo (istream & ist);
 
     void SaveSurfaces (ostream & out) const;
     void LoadSurfaces (istream & in);

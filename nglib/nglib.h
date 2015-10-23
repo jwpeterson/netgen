@@ -691,7 +691,21 @@ DLL_HEADER Ng_Result Ng_OCC_GetFMap(Ng_OCC_Geometry * geom,
 
 #endif // OCCGEOMETRY
 
+// **********************************************************
+// **   CSG Meshing                                        **
+// **********************************************************
 
+// Generate 3D mesh from CSG geometry defined in filename, mesh is
+// allocated by function.
+//
+// Note: this is slightly different from e.g. the two-step
+// Ng_STL_LoadGeometry()/Ng_STL_GenerateSurfaceMesh() interface
+// because I couldn't figure out exactly how to build and pass back a
+// Ng_CSG_LoadGeometry from a CSGeometry object, but it could be split
+// up to better mirror that approach.
+DLL_HEADER Ng_Result Ng_CSG_GenerateMeshFromGeometryFile (const char * filename,
+                                                          Ng_Mesh ** mesh,
+                                                          Ng_Meshing_Parameters * mp);
 
 // **********************************************************
 // **   Mesh refinement algorithms                         **

@@ -962,6 +962,40 @@ namespace nglib
 #endif
 
 
+   // ------------------ Begin - CSG / Meshing Utility Functions ----------------
+   DLL_HEADER Ng_Result Ng_CSG_GenerateMeshFromGeometryFile (const char * filename,
+                                                             Ng_Mesh ** mesh,
+                                                             Ng_Meshing_Parameters * mp)
+   {
+        CSGeometry geom;
+        ifstream ist(filename);
+
+        // LoadGeo allocates memory vi ParseCSG, so we are responsible
+        // for deleting geom_ptr.
+        CSGeometry * geom_ptr = geom.LoadGeo(ist);
+   
+        // use global variable mparam
+        mp->Transfer_Parameters();
+        
+        // Recreate code from python_csg.cpp to generate a Mesh from the Geometry.
+        // Note: this will later be moved to something like Ng_CSG_GenerateMesh().
+        shared_ptr<Mesh> m(new Mesh, &NOOP_Deleter);
+        geom_ptr->GenerateMesh(m,
+                               mparam,
+                               /*perfstepsstart=*/0,
+                               /*perfstepsend=*/6);
+        
+        cout << m->GetNSE() << " elements, " << m->GetNP() << " points" << endl;
+
+        // Clean up
+        delete geom_ptr;
+
+        // Set output parameters and return OK status.
+        *mesh = (Ng_Mesh*)m.get();
+        return NG_OK;
+   }
+
+   // ------------------ End - CSG / Meshing Utility Functions ----------------
 
 
    // ------------------ Begin - Meshing Parameters related functions ------------------

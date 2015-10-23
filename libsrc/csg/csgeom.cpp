@@ -233,6 +233,17 @@ namespace netgen
     ost << "end" << endl;
   }
 
+extern CSGeometry * ParseCSG (istream & istr);
+
+CSGeometry * CSGeometry :: LoadGeo (istream & ist)
+{
+	CSGeometry * hgeom = ParseCSG (ist);
+	if (!hgeom)
+	  throw NgException ("geo-file should start with 'algebraic3d'");
+
+	hgeom -> FindIdenticSurfaces(1e-8 * hgeom->MaxSize());
+	return hgeom;
+}
  
   void CSGeometry :: Load (istream & ist)
   {
@@ -1494,7 +1505,6 @@ namespace netgen
     // virtual VisualScene * GetVisualScene (const NetgenGeometry * geom) const;
   };
 
-  extern CSGeometry * ParseCSG (istream & istr);
 
   NetgenGeometry *  CSGeometryRegister :: Load (string filename) const
   {
