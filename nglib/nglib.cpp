@@ -961,73 +961,40 @@ namespace nglib
    // ------------------ End - OCC Geometry / Meshing Utility Functions ----------------
 #endif
 
+
    // ------------------ Begin - CSG / Meshing Utility Functions ----------------
-   DLL_HEADER Ng_CSG_Geometry * Ng_CSG_NewGeometry ()
+   DLL_HEADER Ng_Result Ng_CSG_GenerateMeshFromGeometryFile (const char * filename,
+                                                             Ng_Mesh ** mesh,
+                                                             Ng_Meshing_Parameters * mp)
    {
-      return (Ng_CSG_Geometry*)(void*)new CSGeometry;
+        CSGeometry geom;
+        ifstream ist(filename);
+        cout << "Preparing to call CSGeometry::Load()" << endl;
+        CSGeometry * geom_ptr = geom.LoadGeo(ist);
+   
+        // Investigation: print the number of surfaces in the geometry.
+        cout << "CSG has " << geom_ptr->GetNSolids()
+             << " solids, and " << geom_ptr->GetNSurf()
+             << " surfaces." << endl;
+   
+        // use global variable mparam
+        mp->Transfer_Parameters();
+        
+        // Recreate code from python_csg.cpp to generate a Mesh from the Geometry.
+        // Note: this will later be moved to something like Ng_CSG_GenerateMesh().
+        shared_ptr<Mesh> m(new Mesh, &NOOP_Deleter);
+        geom_ptr->GenerateMesh(m,
+                               mparam,
+                               /*perfstepsstart=*/0,
+                               /*perfstepsend=*/6);
+        
+        cout << "Mesh has " << m->GetNP()
+             << " points, and " << m->GetNE()
+             << " elements." << endl;
+        
+        *mesh = (Ng_Mesh*)m.get();
+        return NG_OK;
    }
-
-   DLL_HEADER Ng_CSG_Geometry * Ng_CSG_LoadGeometry (const char * filename)
-   {
-     CSGeometry geom;
-     ifstream ist(filename);
-     cout << "Preparing to call CSGeometry::Load()" << endl;
-     CSGeometry * geom_ptr = geom.LoadGeo(ist);
-
-     // Investigation: print the number of surfaces in the geometry.
-     cout << "CSG has " << geom_ptr->GetNSolids()
-          << " solids, and " << geom_ptr->GetNSurf()
-          << " surfaces." << endl;
-
-     // Recreate code from python_csg.cpp to generate a Mesh from the Geometry.
-     // Note: this will later be moved to something like Ng_CSG_GenerateMesh().
-     shared_ptr<Mesh> mesh(new Mesh);
-     MeshingParameters param;
-     geom_ptr->GenerateMesh(mesh,
-                            param,
-                            /*perfstepsstart=*/0,
-                            /*perfstepsend=*/6);
-     cout << "Mesh has " << mesh->GetNP()
-          << " points, and " << mesh->GetNE()
-          << " elements." << endl;
-
-     // Return value
-     Ng_CSG_Geometry * ret_geo = Ng_CSG_NewGeometry();
-     return ret_geo;
-   }
-
-DLL_HEADER Ng_Result Ng_CSG_GenerateMeshFromGeometryFile (const char * filename,
-                                                          Ng_Mesh ** mesh,
-                                                          Ng_Meshing_Parameters * mp)
-{
-     CSGeometry geom;
-     ifstream ist(filename);
-     cout << "Preparing to call CSGeometry::Load()" << endl;
-     CSGeometry * geom_ptr = geom.LoadGeo(ist);
-
-     // Investigation: print the number of surfaces in the geometry.
-     cout << "CSG has " << geom_ptr->GetNSolids()
-          << " solids, and " << geom_ptr->GetNSurf()
-          << " surfaces." << endl;
-
-     // use global variable mparam
-     mp->Transfer_Parameters();
-     
-     // Recreate code from python_csg.cpp to generate a Mesh from the Geometry.
-     // Note: this will later be moved to something like Ng_CSG_GenerateMesh().
-     shared_ptr<Mesh> m(new Mesh, &NOOP_Deleter);
-     geom_ptr->GenerateMesh(m,
-                            mparam,
-                            /*perfstepsstart=*/0,
-                            /*perfstepsend=*/6);
-     
-     cout << "Mesh has " << m->GetNP()
-          << " points, and " << m->GetNE()
-          << " elements." << endl;
-     
-     *mesh = (Ng_Mesh*)m.get();
-     return NG_OK;
-}
 
    // ------------------ End - CSG / Meshing Utility Functions ----------------
 
