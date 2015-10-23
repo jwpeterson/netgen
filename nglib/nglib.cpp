@@ -969,6 +969,9 @@ namespace nglib
    {
         CSGeometry geom;
         ifstream ist(filename);
+
+        // LoadGeo allocates memory vi ParseCSG, so we are responsible
+        // for deleting geom_ptr.
         CSGeometry * geom_ptr = geom.LoadGeo(ist);
    
         // use global variable mparam
@@ -983,7 +986,11 @@ namespace nglib
                                /*perfstepsend=*/6);
         
         cout << m->GetNSE() << " elements, " << m->GetNP() << " points" << endl;
-        
+
+        // Clean up
+        delete geom_ptr;
+
+        // Set output parameters and return OK status.
         *mesh = (Ng_Mesh*)m.get();
         return NG_OK;
    }
