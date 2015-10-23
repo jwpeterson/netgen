@@ -969,13 +969,7 @@ namespace nglib
    {
         CSGeometry geom;
         ifstream ist(filename);
-        cout << "Preparing to call CSGeometry::Load()" << endl;
         CSGeometry * geom_ptr = geom.LoadGeo(ist);
-   
-        // Investigation: print the number of surfaces in the geometry.
-        cout << "CSG has " << geom_ptr->GetNSolids()
-             << " solids, and " << geom_ptr->GetNSurf()
-             << " surfaces." << endl;
    
         // use global variable mparam
         mp->Transfer_Parameters();
@@ -988,9 +982,7 @@ namespace nglib
                                /*perfstepsstart=*/0,
                                /*perfstepsend=*/6);
         
-        cout << "Mesh has " << m->GetNP()
-             << " points, and " << m->GetNE()
-             << " elements." << endl;
+        cout << m->GetNSE() << " elements, " << m->GetNP() << " points" << endl;
         
         *mesh = (Ng_Mesh*)m.get();
         return NG_OK;
