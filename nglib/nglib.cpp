@@ -974,6 +974,18 @@ namespace nglib
           << " solids, and " << geom_ptr->GetNSurf()
           << " surfaces." << endl;
 
+     // Recreate code from python_csg.cpp to generate a Mesh from the Geometry.
+     // Note: this will later be moved to something like Ng_CSG_GenerateMesh().
+     shared_ptr<Mesh> mesh(new Mesh);
+     MeshingParameters param;
+     geom_ptr->GenerateMesh(mesh,
+                            param,
+                            /*perfstepsstart=*/0,
+                            /*perfstepsend=*/6);
+     cout << "Mesh has " << mesh->GetNP()
+          << " points, and " << mesh->GetNE()
+          << " elements." << endl;
+
      // Return value
      Ng_CSG_Geometry * ret_geo = NULL; // To be implemented:Ng_CSG_NewGeometry();
      return ret_geo;
