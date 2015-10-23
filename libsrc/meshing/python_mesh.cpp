@@ -39,6 +39,11 @@ void ExportArray ()
     ;
 }
 
+void TranslateException (const NgException & ex)
+{
+  string err = string("Netgen exception: ")+ex.What();
+  PyErr_SetString(PyExc_RuntimeError, err.c_str());
+}
 
 
 DLL_HEADER void ExportNetgenMeshing() 
@@ -46,6 +51,8 @@ DLL_HEADER void ExportNetgenMeshing()
   
   ModuleScope module("meshing");
 
+  bp::register_exception_translator<NgException>(&TranslateException);
+  
   bp::class_<PointIndex>("PointId", bp::init<int>())
     .def("__repr__", &ToString<PointIndex>)
     .def("__str__", &ToString<PointIndex>)
@@ -262,7 +269,22 @@ DLL_HEADER void ExportNetgenMeshing()
   
   
   bp::class_<Mesh,shared_ptr<Mesh>,boost::noncopyable>("Mesh", bp::no_init)
-    .def(bp::init<>("create empty mesh"))
+    // .def(bp::init<>("create empty mesh"))
+
+    .def("__init__", bp::make_constructor 
+         (FunctionPointer ([](int dim)
+                           {
+                             auto mesh = make_shared<Mesh>();
+                             mesh->SetDimension(dim);
+                             return mesh;
+                           }),
+          bp::default_call_policies(),     // need it to use named arguments
+          (
+           bp::arg("dim")=3
+           )
+          ))
+
+    
     .def("__str__", &ToString<Mesh>)
     .def("Load",  FunctionPointer 
 	 ([](Mesh & self, const string & filename)

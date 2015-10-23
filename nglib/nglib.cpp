@@ -73,6 +73,9 @@ using namespace netgen;
 
 namespace nglib
 {
+  inline void NOOP_Deleter(void *) { ; }
+
+  
    // initialize, deconstruct Netgen library:
    DLL_HEADER void Ng_Init ()
    {
@@ -510,12 +513,10 @@ namespace nglib
       //  MeshingParameters mparam;  
       mp->Transfer_Parameters();
 
-      // MeshFromSpline2D expects a constructed Mesh, the first thing
-      // it tries to do is SetDimension() on it!
-      shared_ptr<Mesh> m(new Mesh);
+      shared_ptr<Mesh> m(new Mesh, &NOOP_Deleter);
       MeshFromSpline2D (*(SplineGeometry2d*)geom, m, mparam);
-      new shared_ptr<Mesh> (m);  // hack to keep mesh m alive 
-
+      // new shared_ptr<Mesh> (m);  // hack to keep mesh m alive 
+      
       cout << m->GetNSE() << " elements, " << m->GetNP() << " points" << endl;
 
       *mesh = (Ng_Mesh*)m.get();
