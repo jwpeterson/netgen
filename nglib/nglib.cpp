@@ -523,6 +523,16 @@ namespace nglib
       return NG_OK;
    }
 
+   DLL_HEADER Ng_Result Ng_DeleteGeometry_2D (Ng_Geometry_2D * geom)
+   {
+      if (geom != NULL)
+      {
+         delete (SplineGeometry2d*)geom;
+         geom = NULL;
+         return NG_OK;
+      }
+      return NG_ERROR;
+   }
 
 
 
@@ -962,6 +972,63 @@ namespace nglib
 #endif
 
 
+   // ------------------ Begin - CSG / Meshing Utility Functions ----------------
+   // loads geometry from CSG file
+   DLL_HEADER Ng_CSG_Geometry * Ng_CSG_LoadGeometry (const char * filename)
+   {
+        CSGeometry geom_obj;
+        ifstream ist(filename);
+
+        // LoadGeo allocates memory via ParseCSG, we hand this back to the user,
+        // so he is responsible for deleting it.
+        CSGeometry * geom_ptr = geom_obj.LoadGeo(ist);
+
+        return (Ng_CSG_Geometry*) geom_ptr;
+   }
+
+
+
+   // Generate a mesh of the CSG geometry
+   DLL_HEADER Ng_Mesh * Ng_CSG_GenerateMesh (Ng_CSG_Geometry * geom,
+                                             Ng_Meshing_Parameters * mp)
+   {
+        // Treat geom as CSGeometry*
+        CSGeometry * geom_ptr = (CSGeometry*) geom;
+
+        // use global variable mparam
+        mp->Transfer_Parameters();
+
+        // Recreate code from python_csg.cpp to generate a Mesh from the Geometry.
+        // Note: this will later be moved to something like Ng_CSG_GenerateMesh().
+        shared_ptr<Mesh> m(new Mesh, &NOOP_Deleter);
+        geom_ptr->GenerateMesh(m,
+                               mparam,
+                               /*perfstepsstart=*/0,
+                               /*perfstepsend=*/6);
+
+        cout << m->GetNSE() << " elements, " << m->GetNP() << " points" << endl;
+
+        // Return a pointer to the Mesh object.
+        return (Ng_Mesh*)m.get();
+   }
+
+
+
+   // Delete the CSG Geometry Object
+   DLL_HEADER Ng_Result Ng_CSG_DeleteGeometry (Ng_CSG_Geometry * geom)
+   {
+      if (geom != NULL)
+      {
+         delete (CSGeometry*)geom;
+         geom = NULL;
+         return NG_OK;
+      }
+
+      return NG_ERROR;
+   }
+
+
+   // ------------------ End - CSG / Meshing Utility Functions ----------------
 
 
    // ------------------ Begin - Meshing Parameters related functions ------------------

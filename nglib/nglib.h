@@ -583,7 +583,9 @@ DLL_HEADER Ng_Result Ng_GenerateMesh_2D (Ng_Geometry_2D * geom,
 DLL_HEADER void Ng_HP_Refinement (Ng_Geometry_2D * geom,
                                   Ng_Mesh * mesh,
                                   int levels);
-  
+
+// Delete a 2D Geometry object
+DLL_HEADER Ng_Result Ng_DeleteGeometry_2D (Ng_Geometry_2D * geom);
 
 
 
@@ -691,7 +693,19 @@ DLL_HEADER Ng_Result Ng_OCC_GetFMap(Ng_OCC_Geometry * geom,
 
 #endif // OCCGEOMETRY
 
+// **********************************************************
+// **   CSG Meshing                                        **
+// **********************************************************
 
+// loads geometry from CSG file
+DLL_HEADER Ng_CSG_Geometry * Ng_CSG_LoadGeometry (const char * filename);
+
+// Generate a mesh of the CSG geometry
+DLL_HEADER Ng_Mesh * Ng_CSG_GenerateMesh (Ng_CSG_Geometry * geom,
+                                          Ng_Meshing_Parameters * mp);
+
+// Delete a CSG Geometry Object
+DLL_HEADER Ng_Result Ng_CSG_DeleteGeometry (Ng_CSG_Geometry * geom);
 
 // **********************************************************
 // **   Mesh refinement algorithms                         **
