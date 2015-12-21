@@ -1,9 +1,14 @@
 set(netgen_sources demoview.cpp ngappinit.cpp onetcl.cpp parallelfunc.cpp ngpkg.cpp ../libsrc/stlgeom/stlpkg.cpp ../libsrc/visualization/visualpkg.cpp ../libsrc/csg/csgpkg.cpp ../libsrc/geom2d/geom2dpkg.cpp)
 
 if(USE_GUI)
+    if(WIN32)
+      # add icon to netgen executable
+      enable_language(RC)
+      set(netgen_sources ${netgen_sources} ../windows/netgen.rc)
+    endif(WIN32)
 
     add_executable(netgen ${netgen_sources})
-    target_link_libraries( netgen nglib ${ZLIB_LIBRARIES} ${LIBTOGL} ${TK_LIBRARY} ${TCL_LIBRARY} ${JPEG_LIBRARIES} ${FFMPEG_LIBRARIES})
+    target_link_libraries( netgen nglib ${ZLIB_LIBRARIES} ${LIBTOGL} ${TK_LIBRARY} ${TCL_LIBRARY} ${JPEG_LIBRARIES} ${FFMPEG_LIBRARIES} ${X11_X11_LIB})
     if(NOT WIN32)
       target_link_libraries( netgen mesh stlvis stl geom2dvis interface geom2d csg stl visual csgvis )
     endif(NOT WIN32)

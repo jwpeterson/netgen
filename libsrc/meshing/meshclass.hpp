@@ -247,9 +247,8 @@ namespace netgen
 
     const Array<Segment> & LineSegments() const { return segments; }
     Array<Segment> & LineSegments() { return segments; }
-
-
-
+    
+    Array<Element0d> pointelements;  // only via python interface
 
     DLL_HEADER SurfaceElementIndex AddSurfaceElement (const Element2d & el);
     void DeleteSurfaceElement (int eli)
@@ -583,7 +582,7 @@ namespace netgen
     const string & GetBCName ( int bcnr ) const;
 
     string * GetBCNamePtr ( int bcnr )
-    { return bcnames[bcnr]; }
+    { return bcnr < bcnames.Size() ? bcnames[bcnr] : nullptr; }
 
     ///
     void ClearFaceDescriptors()

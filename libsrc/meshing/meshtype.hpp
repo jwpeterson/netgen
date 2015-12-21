@@ -586,7 +586,7 @@ namespace netgen
     flagstruct flags;
 
     ///
-    Element ();
+    DLL_HEADER Element ();
     ///
     Element (int anp);
     ///
@@ -907,7 +907,14 @@ namespace netgen
   ostream & operator<<(ostream  & s, const Segment & seg);
 
 
+  class Element0d
+  {
+  public:
+    PointIndex pnum;
+    int index;
+  };
 
+  ostream & operator<<(ostream  & s, const Element0d & el);
 
   // class Surface;  
   // class FaceDescriptor;
@@ -961,7 +968,7 @@ namespace netgen
     // Philippose - 06/07/2009
     // Get Surface colour
     Vec3d SurfColour () const { return surfcolour; }
-	DLL_HEADER const string & GetBCName () const;
+    DLL_HEADER const string & GetBCName () const;
     // string * BCNamePtr () { return bcname; }
     // const string * BCNamePtr () const  { return bcname; }
     void SetSurfNr (int sn) { surfnr = sn; }
