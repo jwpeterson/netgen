@@ -1017,7 +1017,7 @@ namespace nglib
                                              Ng_Mesh * mesh,
                                              Ng_Meshing_Parameters * mp)
    {
-        // Treat geom as CSGeomtry*
+        // Treat geom as CSGeometry*
         CSGeometry * geom_ptr = (CSGeometry*) geom;
 
         // use global variable mparam
