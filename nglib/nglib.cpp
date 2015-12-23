@@ -1013,8 +1013,7 @@ namespace nglib
 
 
    // Generate a mesh of the CSG geometry
-   DLL_HEADER Ng_Result Ng_CSG_GenerateMesh (Ng_CSG_Geometry * geom,
-                                             Ng_Mesh * mesh,
+   DLL_HEADER Ng_Mesh * Ng_CSG_GenerateMesh (Ng_CSG_Geometry * geom,
                                              Ng_Meshing_Parameters * mp)
    {
         // Treat geom as CSGeometry*
@@ -1033,9 +1032,8 @@ namespace nglib
 
         cout << m->GetNSE() << " elements, " << m->GetNP() << " points" << endl;
 
-        // Set output parameters and return OK status.
-        mesh = (Ng_Mesh*)m.get();
-        return NG_OK;
+        // Return a pointer to the Mesh object.
+        return (Ng_Mesh*)m.get();
    }
 
 

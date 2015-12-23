@@ -713,8 +713,7 @@ DLL_HEADER Ng_Result Ng_CSG_GenerateMeshFromGeometryFile (const char * filename,
 DLL_HEADER Ng_CSG_Geometry * Ng_CSG_LoadGeometry (const char * filename);
 
 // Generate a mesh of the CSG geometry
-DLL_HEADER Ng_Result Ng_CSG_GenerateMesh (Ng_CSG_Geometry * geom,
-                                          Ng_Mesh * mesh,
+DLL_HEADER Ng_Mesh * Ng_CSG_GenerateMesh (Ng_CSG_Geometry * geom,
                                           Ng_Meshing_Parameters * mp);
 
 // Delete a CSG Geometry Object
