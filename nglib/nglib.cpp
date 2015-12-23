@@ -995,6 +995,19 @@ namespace nglib
         return NG_OK;
    }
 
+   // loads geometry from CSG file
+   DLL_HEADER Ng_CSG_Geometry * Ng_CSG_LoadGeometry (const char * filename)
+   {
+        CSGeometry geom_obj;
+        ifstream ist(filename);
+
+        // LoadGeo allocates memory via ParseCSG, we hand this back to the user,
+        // so he is responsible for deleting it.
+        CSGeometry * geom_ptr = geom_obj.LoadGeo(ist);
+
+        return (Ng_CSG_Geometry*) geom_ptr;
+   }
+
    // Delete the CSG Geometry Object
    DLL_HEADER Ng_Result Ng_CSG_DeleteGeometry (Ng_CSG_Geometry * geom)
    {
