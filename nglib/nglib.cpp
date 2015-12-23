@@ -995,6 +995,20 @@ namespace nglib
         return NG_OK;
    }
 
+   // Delete the CSG Geometry Object
+   DLL_HEADER Ng_Result Ng_CSG_DeleteGeometry (Ng_CSG_Geometry * geom)
+   {
+      if (geom != NULL)
+      {
+         delete (CSGeometry*)geom;
+         geom = NULL;
+         return NG_OK;
+      }
+
+      return NG_ERROR;
+   }
+
+
    // ------------------ End - CSG / Meshing Utility Functions ----------------
 
 
