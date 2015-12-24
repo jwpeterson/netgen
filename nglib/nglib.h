@@ -583,7 +583,9 @@ DLL_HEADER Ng_Result Ng_GenerateMesh_2D (Ng_Geometry_2D * geom,
 DLL_HEADER void Ng_HP_Refinement (Ng_Geometry_2D * geom,
                                   Ng_Mesh * mesh,
                                   int levels);
-  
+
+// Delete a 2D Geometry object
+DLL_HEADER Ng_Result Ng_DeleteGeometry_2D (Ng_Geometry_2D * geom);
 
 
 

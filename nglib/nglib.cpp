@@ -523,6 +523,16 @@ namespace nglib
       return NG_OK;
    }
 
+   DLL_HEADER Ng_Result Ng_DeleteGeometry_2D (Ng_Geometry_2D * geom)
+   {
+      if (geom != NULL)
+      {
+         delete (SplineGeometry2d*)geom;
+         geom = NULL;
+         return NG_OK;
+      }
+      return NG_ERROR;
+   }
 
 
 
